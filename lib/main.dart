@@ -1,8 +1,16 @@
+import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    DevicePreview(
+      // enabled: !kReleaseMode,
+      enabled: !kReleaseMode,
+      builder: (context) => const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -12,10 +20,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      builder: (context, child) => const MaterialApp(
+      builder: (context, child) => MaterialApp(
+        builder: DevicePreview.appBuilder,
+        useInheritedMediaQuery: true,
+        locale: DevicePreview.locale(context),
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
-        home: HomePage(),
+        home: const HomePage(),
       ),
       designSize: const Size(360, 640),
     );
@@ -103,12 +114,11 @@ class HomePage extends StatelessWidget {
                   child: TextButton(
                     onPressed: () {},
                     style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(purpleColor),
-                        foregroundColor:
-                            MaterialStateProperty.all(Colors.white),
-                        padding: MaterialStateProperty.all(
+                        backgroundColor: WidgetStateProperty.all(purpleColor),
+                        foregroundColor: WidgetStateProperty.all(Colors.white),
+                        padding: WidgetStateProperty.all(
                             EdgeInsets.symmetric(vertical: 14.h)),
-                        textStyle: MaterialStateProperty.all(TextStyle(
+                        textStyle: WidgetStateProperty.all(TextStyle(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w700,
                         ))),
@@ -150,14 +160,13 @@ class HomePage extends StatelessWidget {
                   child: TextButton(
                     onPressed: () {},
                     style: ButtonStyle(
-                        side: MaterialStateProperty.all(BorderSide(
+                        side: WidgetStateProperty.all(BorderSide(
                           color: borderColor,
                         )),
-                        foregroundColor:
-                            MaterialStateProperty.all(darkTextColor),
-                        padding: MaterialStateProperty.all(
+                        foregroundColor: WidgetStateProperty.all(darkTextColor),
+                        padding: WidgetStateProperty.all(
                             EdgeInsets.symmetric(vertical: 14.h)),
-                        textStyle: MaterialStateProperty.all(TextStyle(
+                        textStyle: WidgetStateProperty.all(TextStyle(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w700,
                         ))),
